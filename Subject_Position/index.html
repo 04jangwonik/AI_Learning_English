@@ -1,1 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Quiz: Nouns & Noun Equivalents as Subject</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Primary Font: Cambria with fallback serif fonts */
+        body, .serif-font {
+            font-family: 'Cambria', 'Georgia', 'Times New Roman', serif;
+        }
+        /* UI Sans Font for modern badges and UI controls */
+        .sans-text {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        /* Custom Smooth Transition */
+        .card-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        /* Radio Button Styling */
+        .option-card {
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .option-card:hover:not(.disabled) {
+            border-color: #6366f1;
+            background-color: #f8fafc;
+        }
+        .option-card.selected {
+            border-color: #4f46e5;
+            background-color: #eef2ff;
+        }
+        .option-card.correct {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .option-card.incorrect {
+            border-color: #ef4444;
+            background-color: #fef2f2;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between selection:bg-indigo-100 selection:text-indigo-900">
 
+    <!-- Header Section -->
+    <header class="bg-white border-b border-slate-200 shadow-sm sticky top-0 z-10">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-sm">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold text-slate-900 leading-tight">Grammar Mastery Quiz</h1>
+                    <p class="text-xs text-slate-500 sans-text font-medium">Subjects: Nouns & Noun Equivalents (명사와 명사 상당어구)</p>
+                </div>
+            </div>
+            <span id="question-badge" class="hidden sans-text text-xs font-semibold px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-full border border-indigo-200 shadow-sm">
+                Question <span id="current-q-num">1</span> of 5
+            </span>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-3xl w-full mx-auto px-4 py-8 flex-grow flex flex-col justify-center">
+
+        <!-- Progress Bar -->
+        <div id="progress-container" class="w-full bg-slate-200 rounded-full h-2.5 mb-6 hidden overflow-hidden shadow-inner">
+            <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300 w-0"></div>
+        </div>
+
+        <!-- Start Screen Card -->
+        <div id="start-screen" class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-10 text-center space-y-6 card-transition">
+            <div class="inline-flex p-4 bg-indigo-50 text-indigo-600 rounded-full mb-1">
+                <i class="fa-solid fa-book-open-reader text-4xl"></i>
+            </div>
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Elements in the Subject Position</h2>
+            <p class="text-slate-600 max-w-xl mx-auto leading-relaxed text-base md:text-lg">
+                Evaluate your understanding of grammatically valid elements that function as the <strong>subject</strong> of a sentence, including Nouns, Pronouns, Gerunds, Infinitives, and Noun Clauses.
+            </p>
+            
+            <!-- Learning Objectives Box -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-left max-w-lg mx-auto sans-text text-sm space-y-2">
+                <div class="font-bold text-slate-800 flex items-center gap-2 text-base">
+                    <i class="fa-solid fa-check-double text-indigo-600"></i> What You'll Learn / 학습 내용
+                </div>
+                <ul class="space-y-1.5 text-slate-600 pl-1">
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-500 font-bold">•</span>
+                        <span><strong>Gerund Phrases (동명사구):</strong> <em>-ing</em> forms serving as main subjects.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-500 font-bold">•</span>
+                        <span><strong>Infinitive Phrases (to-부정사구):</strong> Abstract/action subjects.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-500 font-bold">•</span>
+                        <span><strong>Noun Clauses (명사절):</strong> <em>That...</em> and <em>What...</em> clauses acting as subjects.</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-indigo-500 font-bold">•</span>
+                        <span><strong>Complex Noun Phrases (복합 명사구):</strong> Head nouns with post-modifiers.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <button onclick="startQuiz()" class="inline-flex items-center justify-center px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition duration-200 text-lg cursor-pointer sans-text transform hover:-translate-y-0.5">
+                    Start Quiz (퀴즈 시작하기) <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Question Card -->
+        <div id="quiz-card" class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-8 hidden card-transition">
+            
+            <!-- Question Header -->
+            <div class="mb-6">
+                <span id="concept-tag" class="inline-block sans-text text-xs font-bold uppercase tracking-wider text-indigo-700 bg-indigo-50 border border-indigo-100 px-3 py-1 rounded-md mb-3">
+                    Grammar Focus
+                </span>
+                <h2 id="question-text" class="text-lg md:text-xl font-bold text-slate-900 leading-snug">
+                    Question text will appear here.
+                </h2>
+            </div>
+
+            <!-- Choices / Options -->
+            <div id="options-container" class="space-y-3 mb-6 sans-text">
+                <!-- Dynamically populated choices -->
+            </div>
+
+            <!-- Explanation Box -->
+            <div id="explanation-box" class="hidden mb-6 p-4 rounded-xl border transition-all duration-200">
+                <div class="flex items-start gap-3">
+                    <div id="explanation-icon" class="text-xl mt-0.5"></div>
+                    <div class="space-y-1">
+                        <h4 id="explanation-title" class="font-bold text-base font-sans">Grammar Rule / 문법 설명</h4>
+                        <p id="explanation-text" class="text-sm leading-relaxed text-slate-700 font-sans"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions Footer -->
+            <div class="flex justify-between items-center pt-4 border-t border-slate-100 sans-text">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-lg text-sm transition cursor-pointer flex items-center gap-1.5 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-arrow-left text-xs"></i> Previous
+                </button>
+                <div>
+                    <button id="submit-btn" onclick="submitAnswer()" disabled class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-sm transition duration-200 cursor-pointer text-sm">
+                        Check Answer
+                    </button>
+                    <button id="next-btn" onclick="nextQuestion()" class="hidden px-6 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl shadow-sm transition duration-200 cursor-pointer text-sm items-center gap-2">
+                        <span>Next Question</span> <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Completion Screen -->
+        <div id="score-screen" class="bg-white rounded-2xl shadow-md border border-slate-200 p-6 md:p-10 text-center space-y-6 hidden card-transition">
+            <div class="inline-flex p-4 bg-indigo-50 text-indigo-600 rounded-full">
+                <i class="fa-solid fa-trophy text-4xl"></i>
+            </div>
+            
+            <div>
+                <h2 class="text-3xl font-bold text-slate-900">Quiz Completed!</h2>
+                <p class="text-slate-500 text-sm mt-1 sans-text">Nouns & Noun Equivalents Evaluation</p>
+            </div>
+
+            <div class="py-2">
+                <p class="text-slate-400 text-xs uppercase tracking-wider font-semibold sans-text mb-1">Final Score</p>
+                <div class="text-5xl font-extrabold text-indigo-600" id="final-score">0 / 5</div>
+                <p id="score-percentage" class="text-sm font-semibold text-slate-500 sans-text mt-1">0%</p>
+                <p id="feedback-message" class="text-slate-700 mt-3 text-lg font-medium"></p>
+            </div>
+
+            <!-- Detailed Breakdowns -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 text-left max-w-lg mx-auto space-y-3">
+                <h3 class="font-bold text-slate-800 border-b border-slate-200 pb-2 flex justify-between items-center sans-text">
+                    <span>Performance Breakdown</span>
+                    <span class="text-xs text-indigo-600 font-semibold" id="mastery-level">Mastery: 0%</span>
+                </h3>
+                <div id="summary-details" class="space-y-2 text-sm sans-text">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <div class="pt-2 flex justify-center">
+                <button onclick="resetQuiz()" class="inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl shadow-md transition duration-200 cursor-pointer sans-text">
+                    <i class="fa-solid fa-rotate-right mr-2"></i> Retake Quiz (다시 풀기)
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 sans-text">
+        <p>English Syntax & Grammar Series • Noun Equivalents in Subject Position</p>
+    </footer>
+
+    <!-- JavaScript Quiz Logic -->
+    <script>
+        // 5 Comprehensive Grammar Questions evaluating Nouns & Noun Equivalents in Subject Position
+        const quizData = [
+            {
+                concept: "Gerund Phrase as Subject (동명사구 주어)",
+                question: "In the sentence: \"<u>Finding reliable sources for academic research</u> takes time and careful evaluation.\" What element functions as the subject?",
+                options: [
+                    "A simple noun ('research')",
+                    "A gerund phrase acting as a noun equivalent",
+                    "A prepositional phrase modifying 'takes'",
+                    "An infinitive phrase"
+                ],
+                correct: 1,
+                explanation: "<strong>Correct!</strong> '<u>Finding reliable sources for academic research</u>' is a <strong>gerund phrase</strong> (-ing phrase). A gerund phrase functions as a noun equivalent and takes a singular verb ('takes').<br><span class='text-xs text-slate-500 mt-1 block'>[한국어 설명] 'Finding ~ research' 전체가 동명사구로서 문장의 주어 역할을 하며, 단수 취급하여 동사 'takes'가 왔습니다.</span>"
+            },
+            {
+                concept: "Noun Clause as Subject (명사절 주어 - That절)",
+                question: "Which of the underlined sections functions as a complete Noun Clause in the subject position?",
+                options: [
+                    "<u>That solar energy is renewable</u> is a well-known scientific fact.",
+                    "<u>Because solar energy is renewable</u>, many countries invest in it.",
+                    "<u>Solar energy, which is renewable</u>, powers the entire facility.",
+                    "<u>To rely on solar energy</u> can reduce carbon emissions."
+                ],
+                correct: 0,
+                explanation: "<strong>Correct!</strong> '<u>That solar energy is renewable</u>' is a <strong>noun clause</strong> introduced by the conjunction 'that'. It forms a complete subject preceding the main verb 'is'. Option B is an adverbial clause; Option C is a noun phrase with a relative clause; Option D is an infinitive phrase.<br><span class='text-xs text-slate-500 mt-1 block'>[한국어 설명] 'That + 주어 + 동사' 형태의 명사절이 문장 전체의 주어로 쓰여 '~라는 것은'으로 해석됩니다.</span>"
+            },
+            {
+                concept: "Infinitive Phrase as Subject (to-부정사구 주어)",
+                question: "Identify the correct verb form to complete the sentence: \"<u>To maintain high standards in customer service</u> _____ essential for business growth.\"",
+                options: [
+                    "are",
+                    "is",
+                    "were",
+                    "have been"
+                ],
+                correct: 1,
+                explanation: "<strong>Correct!</strong> When an <strong>infinitive phrase</strong> ('To maintain...') acts as a noun equivalent in the subject position, it represents a single concept or action and strictly requires a <strong>singular verb ('is')</strong>.<br><span class='text-xs text-slate-500 mt-1 block'>[한국어 설명] to-부정사구가 주어 자리에 올 때는 단수 개념으로 취급하므로 단수 동사 'is'가 올바른 답입니다.</span>"
+            },
+            {
+                concept: "Complex Noun Phrase as Subject (복합 명사구 주어)",
+                question: "What is the head noun (핵심 명사) that controls the verb agreement in: \"The detailed report <u>on climate change consequences</u> has been published.\"",
+                options: [
+                    "climate",
+                    "consequences",
+                    "report",
+                    "published"
+                ],
+                correct: 2,
+                explanation: "<strong>Correct!</strong> In the complex noun phrase 'The detailed report on climate change consequences', <strong>'report'</strong> is the head noun. The prepositional phrase 'on climate change consequences' acts as a modifier. Therefore, the singular head noun 'report' agrees with 'has been'.<br><span class='text-xs text-slate-500 mt-1 block'>[한국어 설명] 전치사구의 수식을 받는 복합 명사구에서 주어의 핵(Head)은 'report'이므로 단수 동사 'has'와 일치합니다.</span>"
+            },
+            {
+                concept: "Wh- Noun Clause as Subject (의문사 명사절 주어)",
+                question: "Choose the grammatically correct sentence where a <i>What</i>-noun clause functions as the subject:",
+                options: [
+                    "What caused the machinery failure remaining unknown to the engineers.",
+                    "What caused the machinery failure remains unknown to the engineers.",
+                    "What did cause the machinery failure it remains unknown.",
+                    "What cause the machinery failure remain unknown to engineers."
+                ],
+                correct: 1,
+                explanation: "<strong>Correct!</strong> '<u>What caused the machinery failure</u>' is a noun clause (functioning as a singular noun equivalent subject) paired with the main finite verb 'remains'. Wh- noun clauses in subject position take a singular verb.<br><span class='text-xs text-slate-500 mt-1 block'>[한국어 설명] 'What caused the machinery failure'는 의문대명사절로 문장의 주어 역할을 하며, 단수 동사 'remains'와 결합합니다.</span>"
+            }
+        ];
+
+        // State Management
+        let currentQuestion = 0;
+        let selectedAnswers = new Array(quizData.length).fill(null);
+        let submittedQuestions = new Array(quizData.length).fill(false);
+
+        // DOM Elements
+        const startScreen = document.getElementById('start-screen');
+        const quizCard = document.getElementById('quiz-card');
+        const scoreScreen = document.getElementById('score-screen');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+        const questionBadge = document.getElementById('question-badge');
+        const currentQNum = document.getElementById('current-q-num');
+
+        const conceptTag = document.getElementById('concept-tag');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const explanationBox = document.getElementById('explanation-box');
+        const explanationIcon = document.getElementById('explanation-icon');
+        const explanationText = document.getElementById('explanation-text');
+
+        const submitBtn = document.getElementById('submit-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quizCard.classList.remove('hidden');
+            progressContainer.classList.remove('hidden');
+            questionBadge.classList.remove('hidden');
+            loadQuestion(0);
+        }
+
+        function loadQuestion(index) {
+            currentQuestion = index;
+            const data = quizData[index];
+
+            // UI Header updates
+            currentQNum.textContent = index + 1;
+            progressBar.style.width = `${((index + 1) / quizData.length) * 100}%`;
+            conceptTag.textContent = data.concept;
+            questionText.innerHTML = data.question;
+
+            // Clear previous options
+            optionsContainer.innerHTML = '';
+
+            const isSubmitted = submittedQuestions[index];
+            const userChoice = selectedAnswers[index];
+
+            // Render Options
+            data.options.forEach((opt, idx) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = `option-card p-4 rounded-xl cursor-pointer flex items-center justify-between ${isSubmitted ? 'disabled' : ''}`;
+                
+                if (userChoice === idx) {
+                    optionDiv.classList.add('selected');
+                }
+
+                if (isSubmitted) {
+                    if (idx === data.correct) {
+                        optionDiv.classList.add('correct');
+                    } else if (userChoice === idx && userChoice !== data.correct) {
+                        optionDiv.classList.add('incorrect');
+                    }
+                }
+
+                optionDiv.onclick = () => {
+                    if (!submittedQuestions[currentQuestion]) {
+                        selectOption(idx);
+                    }
+                };
+
+                let indicatorBadge = `<span class="w-6 h-6 rounded-full border border-slate-300 flex items-center justify-center text-xs font-semibold text-slate-500 mr-3 flex-shrink-0">${String.fromCharCode(65 + idx)}</span>`;
+                
+                if (isSubmitted) {
+                    if (idx === data.correct) {
+                        indicatorBadge = `<span class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs mr-3 flex-shrink-0"><i class="fa-solid fa-check"></i></span>`;
+                    } else if (userChoice === idx && userChoice !== data.correct) {
+                        indicatorBadge = `<span class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center text-xs mr-3 flex-shrink-0"><i class="fa-solid fa-xmark"></i></span>`;
+                    }
+                }
+
+                optionDiv.innerHTML = `
+                    <div class="flex items-center">
+                        ${indicatorBadge}
+                        <span class="text-sm md:text-base text-slate-800 font-medium">${opt}</span>
+                    </div>
+                `;
+
+                optionsContainer.appendChild(optionDiv);
+            });
+
+            // Handle Navigation & Explanation state
+            prevBtn.disabled = index === 0;
+
+            if (isSubmitted) {
+                showExplanation(userChoice === data.correct, data.explanation);
+                submitBtn.classList.add('hidden');
+                nextBtn.classList.remove('hidden');
+                if (index === quizData.length - 1) {
+                    nextBtn.querySelector('span').textContent = "View Results";
+                } else {
+                    nextBtn.querySelector('span').textContent = "Next Question";
+                }
+            } else {
+                explanationBox.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                submitBtn.disabled = userChoice === null;
+                nextBtn.classList.add('hidden');
+            }
+        }
+
+        function selectOption(index) {
+            selectedAnswers[currentQuestion] = index;
+            submitBtn.disabled = false;
+
+            // Update visible selection styles
+            const cards = optionsContainer.querySelectorAll('.option-card');
+            cards.forEach((card, idx) => {
+                if (idx === index) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        function submitAnswer() {
+            if (selectedAnswers[currentQuestion] === null) return;
+
+            submittedQuestions[currentQuestion] = true;
+            const isCorrect = selectedAnswers[currentQuestion] === quizData[currentQuestion].correct;
+
+            showExplanation(isCorrect, quizData[currentQuestion].explanation);
+            loadQuestion(currentQuestion); // Refresh view to show correct/incorrect status
+        }
+
+        function showExplanation(isCorrect, text) {
+            explanationBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'bg-red-50', 'border-red-200');
+            
+            if (isCorrect) {
+                explanationBox.classList.add('bg-emerald-50', 'border-emerald-200');
+                explanationIcon.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i>`;
+                explanationBox.querySelector('h4').className = "font-bold text-base text-emerald-900";
+            } else {
+                explanationBox.classList.add('bg-red-50', 'border-red-200');
+                explanationIcon.innerHTML = `<i class="fa-solid fa-circle-xmark text-red-600"></i>`;
+                explanationBox.querySelector('h4').className = "font-bold text-base text-red-900";
+            }
+
+            explanationText.innerHTML = text;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < quizData.length - 1) {
+                loadQuestion(currentQuestion + 1);
+            } else {
+                showScoreScreen();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                loadQuestion(currentQuestion - 1);
+            }
+        }
+
+        function showScoreScreen() {
+            quizCard.classList.add('hidden');
+            progressContainer.classList.add('hidden');
+            questionBadge.classList.add('hidden');
+            scoreScreen.classList.remove('hidden');
+
+            let score = 0;
+            const summaryDetails = document.getElementById('summary-details');
+            summaryDetails.innerHTML = '';
+
+            quizData.forEach((q, idx) => {
+                const userAns = selectedAnswers[idx];
+                const isCorrect = userAns === q.correct;
+                if (isCorrect) score++;
+
+                const detailRow = document.createElement('div');
+                detailRow.className = "flex justify-between items-center py-1.5 border-b border-slate-200 last:border-none";
+                detailRow.innerHTML = `
+                    <span class="text-slate-700 font-medium">Q${idx + 1}: ${q.concept}</span>
+                    <span class="${isCorrect ? 'text-emerald-600 font-bold' : 'text-red-500 font-bold'}">
+                        ${isCorrect ? '<i class="fa-solid fa-check mr-1"></i>Correct' : '<i class="fa-solid fa-xmark mr-1"></i>Incorrect'}
+                    </span>
+                `;
+                summaryDetails.appendChild(detailRow);
+            });
+
+            const percentage = Math.round((score / quizData.length) * 100);
+            document.getElementById('final-score').textContent = `${score} / ${quizData.length}`;
+            document.getElementById('score-percentage').textContent = `${percentage}% Correct`;
+            document.getElementById('mastery-level').textContent = `Mastery: ${percentage}%`;
+
+            const feedback = document.getElementById('feedback-message');
+            if (score === 5) {
+                feedback.textContent = "Outstanding! You have mastered subject-position noun equivalents!";
+            } else if (score >= 3) {
+                feedback.textContent = "Good job! You have a solid grasp of noun phrases and clauses.";
+            } else {
+                feedback.textContent = "Keep practicing! Review gerunds, infinitives, and noun clauses as subjects.";
+            }
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            selectedAnswers = new Array(quizData.length).fill(null);
+            submittedQuestions = new Array(quizData.length).fill(false);
+
+            scoreScreen.classList.add('hidden');
+            startScreen.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
